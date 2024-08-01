@@ -1,7 +1,4 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -11,9 +8,10 @@ h3 {
 }
 
 .card-grid {
-  margin: 40px 0;
+  margin: 1rem auto;
+  max-width: 1280px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
 }
 
@@ -23,8 +21,8 @@ h3 {
 }
 
 .card img {
-  width: 150px;
-  height: 150px;
+  width: 165px;
+  height: 165px;
   border: white, 2px, solid;
   border-radius: 4px;
 }
@@ -50,9 +48,30 @@ h3 {
   transition-delay: 0.2s;
 }
 
+.cardNumber {
+  font-size: 20px;
+}
+.newGameButton {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newGameButton:hover {
+  background-color: #0056b3;
+  color: white;
+  transform: scale(1.05);
+}
+
 @media (max-width: 1024px) {
   .card-grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
 

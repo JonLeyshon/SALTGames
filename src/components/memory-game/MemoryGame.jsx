@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import "../../MemoryGame.css";
+import "../../css/MemoryGame.css";
 import SingleCard from "./SingleCard";
-
-const cardImages = [
-  { src: "./img/helmet-1.png", matched: false },
-  { src: "./img/potion-1.png", matched: false },
-  { src: "./img/ring-1.png", matched: false },
-  { src: "./img/scroll-1.png", matched: false },
-  { src: "./img/shield-1.png", matched: false },
-  { src: "./img/sword-1.png", matched: false },
-];
+import axios from "axios";
+import { useSelector } from "react-redux";
+import {
+  selectSoundSelection,
+  selectSyllableSelection,
+} from "../../redux/userSlice";
 
 const MemoryGame = ({ playerOne, playerTwo }) => {
+  const speechSound = useSelector(selectSoundSelection);
+  const syllables = useSelector(selectSyllableSelection);
+  const [cardImages, setCardImages] = useState([]);
   const [shuffledCards, setShuffledCards] = useState([]);
   const [turnOne, setTurnOne] = useState(null);
   const [turnTwo, setTurnTwo] = useState(null);
@@ -22,10 +22,51 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
   const [winnerScript, setWinnerScript] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
 
-  const shuffleCards = () => {
-    const shuffledCards = [...cardImages, ...cardImages]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
+  const handleCardRetrieval = async (speech_sound, syllables) => {
+    try {
+      let results;
+
+      if (syllables) {
+        results = await axios.get(
+          `http://localhost:6002/get?speech_sound=${speech_sound}&syllables=${syllables}`
+        );
+      } else {
+        results = await axios.get(
+          `http://localhost:6002/get?speech_sound=${speech_sound}`
+        );
+      }
+
+      if (results.data.length) {
+        const newCardImages = results.data.map((result) => ({
+          src: result.image_path,
+          matched: false,
+          word: result.word,
+        }));
+        setCardImages(newCardImages);
+        shuffleCards(newCardImages);
+      } else {
+        console.error("Retrieval failed");
+      }
+    } catch (error) {
+      console.error("Retrieval failed:", error);
+    }
+  };
+
+  const shuffleCards = (cards) => {
+    const randomizedCards = cards.sort(() => Math.random() - 0.5);
+
+    const selectedCards = randomizedCards.slice(0, 9);
+
+    const duplicatedCards = [...selectedCards, ...selectedCards].sort(
+      () => Math.random() - 0.5
+    );
+
+    // Assign a unique id to each card
+    const shuffledCards = duplicatedCards.map((card, index) => ({
+      ...card,
+      id: index + 1,
+    }));
+
     setShuffledCards(shuffledCards);
     setTurnOne(null);
     setTurnTwo(null);
@@ -70,7 +111,7 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
   };
 
   useEffect(() => {
-    shuffleCards();
+    handleCardRetrieval(speechSound, syllables);
   }, []);
 
   useEffect(() => {
@@ -93,7 +134,7 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
         }
         setTimeout(() => resetTurns(), 1000);
       } else {
-        setTimeout(() => resetTurns(), 1000);
+        setTimeout(() => resetTurns(), 2000);
       }
     }
   }, [turnOne, turnTwo]);
@@ -102,12 +143,12 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
     checkGameOver();
   }, [shuffledCards]);
 
-  const turnColor = whosTurn === playerOne ? "lightgreen" : "yellow";
+  const turnColor = whosTurn === playerOne ? "green" : "blue";
 
   return (
     <div className="memory-game">
-      <h2 style={{ color: winnerScript ? "white" : turnColor }}>
-        {winnerScript || `${whosTurn} Turn`}
+      <h2 style={{ color: winnerScript ? "Black" : turnColor }}>
+        {winnerScript || `${whosTurn}'s Turn`}
       </h2>
       <h3>{`${playerOne}'s score: ${playerOneScore}`}</h3>
       <h3>{`${playerTwo}'s score: ${playerTwoScore}`}</h3>
@@ -124,7 +165,12 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
           />
         ))}
       </div>
-      <button onClick={shuffleCards}>New Game</button>
+      <button
+        className="newGameButton"
+        onClick={() => shuffleCards(cardImages)}
+      >
+        New Game
+      </button>
     </div>
   );
 };

@@ -1,9 +1,19 @@
-import PlayerSelection from "./components/intro/PlayerSelection";
+import RoutesFile from "./Routes";
+import Footer from "./components/headerAndFooter/Footer";
+import Header from "./components/headerAndFooter/Header";
 
 const App = () => {
   return (
     <>
-      <PlayerSelection />
+      <header>
+        <Header />
+      </header>
+      <main>
+        <RoutesFile />
+      </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

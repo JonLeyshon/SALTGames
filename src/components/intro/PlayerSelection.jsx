@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import MemoryGame from "../memory-game/MemoryGame";
-import "../../Intro.css";
+import "../../css/Intro.css";
+import { useDispatch } from "react-redux";
+import { setPlayerNames } from "../../redux/userSlice";
 
-const PlayerSelection = () => {
+const PlayerSelection = ({ speechSound }) => {
   const [playerOne, setPlayerOne] = useState("");
   const [playerTwo, setPlayerTwo] = useState("");
   const [playersSet, setPlayersSet] = useState(false);
+  const dispatch = useDispatch();
 
   const handlePlayerOneChange = (e) => {
     setPlayerOne(e.target.value);
@@ -17,11 +20,18 @@ const PlayerSelection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setPlayerNames({ playerOne, playerTwo }));
     setPlayersSet(true);
   };
 
   if (playersSet) {
-    return <MemoryGame playerOne={playerOne} playerTwo={playerTwo} />;
+    return (
+      <MemoryGame
+        playerOne={playerOne}
+        playerTwo={playerTwo}
+        speechSound={speechSound}
+      />
+    );
   }
 
   return (
@@ -34,6 +44,7 @@ const PlayerSelection = () => {
             id="username1"
             name="username1"
             type="text"
+            required
             value={playerOne}
             onChange={handlePlayerOneChange}
           />
@@ -44,6 +55,7 @@ const PlayerSelection = () => {
             id="username2"
             name="username2"
             type="text"
+            required
             value={playerTwo}
             onChange={handlePlayerTwoChange}
           />

@@ -1,0 +1,135 @@
+/* PlayerSelection  */
+.player-selection {
+  width: 400px;
+  margin: 50px auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.player-selection h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.start-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+  background-color: #0056b3;
+}
+
+/* Pair selection */
+
+/* Intro.css */
+
+.pairSelectionContainer {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.pairSelectionContainer h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.pairSelectionContainer h2 {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.speechSoundSelection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.speechSoundSelection button {
+  background-color: white;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 10px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.speechSoundSelection button:hover {
+  background-color: #0056b3;
+  color: white;
+  transform: scale(1.05);
+}
+
+.speechSoundSelection button:focus {
+  outline: none;
+}
+
+.speechSoundSelection button:active {
+  background-color: #004085;
+}
+
+.speechSoundSelection button[selected] {
+  color: black;
+}
+
+/* next button */
+.nextButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.nextButton:hover {
+  background-color: #004085;
+  transform: scale(1.05);
+}
+
+.nextButton:focus {
+  outline: none;
+}
