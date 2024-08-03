@@ -4,13 +4,19 @@ import SingleCard from "./SingleCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import {
+  selectPlayerNames,
   selectSoundSelection,
   selectSyllableSelection,
+  setCardAmount,
 } from "../../redux/userSlice";
+import { useNavigate } from "react-router";
 
-const MemoryGame = ({ playerOne, playerTwo }) => {
+const MemoryGame = () => {
   const speechSound = useSelector(selectSoundSelection);
   const syllables = useSelector(selectSyllableSelection);
+  const players = useSelector(selectPlayerNames);
+  const playerOne = players.playerOne;
+  const playerTwo = players.playerTwo;
   const [cardImages, setCardImages] = useState([]);
   const [shuffledCards, setShuffledCards] = useState([]);
   const [turnOne, setTurnOne] = useState(null);
@@ -21,6 +27,10 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [winnerScript, setWinnerScript] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
+  const [wordAmount, setWordAmount] = useState(9);
+  const navigate = useNavigate();
+
+  console.log(players);
 
   const handleCardRetrieval = async (speech_sound, syllables) => {
     try {
@@ -55,13 +65,12 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
   const shuffleCards = (cards) => {
     const randomizedCards = cards.sort(() => Math.random() - 0.5);
 
-    const selectedCards = randomizedCards.slice(0, 9);
+    const selectedCards = randomizedCards.slice(0, wordAmount);
 
     const duplicatedCards = [...selectedCards, ...selectedCards].sort(
       () => Math.random() - 0.5
     );
 
-    // Assign a unique id to each card
     const shuffledCards = duplicatedCards.map((card, index) => ({
       ...card,
       id: index + 1,
@@ -111,8 +120,11 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
   };
 
   useEffect(() => {
+    if (!speechSound) {
+      navigate("/");
+    }
     handleCardRetrieval(speechSound, syllables);
-  }, []);
+  }, [wordAmount]);
 
   useEffect(() => {
     if (turnOne && turnTwo) {
@@ -152,6 +164,24 @@ const MemoryGame = ({ playerOne, playerTwo }) => {
       </h2>
       <h3>{`${playerOne}'s score: ${playerOneScore}`}</h3>
       <h3>{`${playerTwo}'s score: ${playerTwoScore}`}</h3>
+      <button
+        onClick={() => setWordAmount(6)}
+        style={{
+          color: wordAmount === 6 ? "white" : "",
+          backgroundColor: wordAmount === 6 ? "#007bff" : "",
+        }}
+      >
+        6 Words
+      </button>
+      <button
+        onClick={() => setWordAmount(9)}
+        style={{
+          color: wordAmount === 9 ? "white" : "",
+          backgroundColor: wordAmount === 9 ? "#007bff" : "",
+        }}
+      >
+        9 words
+      </button>
 
       <div className="card-grid">
         {shuffledCards.map((card) => (

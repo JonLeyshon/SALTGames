@@ -23,6 +23,7 @@ const SingleCard = ({
           data-tooltip-id="my-tooltip"
           data-tooltip-content={card.word}
         />
+
         <img
           className="back"
           src="./public/img/cover.jpg"
@@ -30,8 +31,7 @@ const SingleCard = ({
           alt="card back"
         />
         <Tooltip id="my-tooltip" place="top" type="dark" effect="float" />
-
-        {/* <p className="cardNumber">{card.id}</p> */}
+        {!flipped ? <p className="cardNumber">{card.id}</p> : ""}
       </div>
     </div>
   );

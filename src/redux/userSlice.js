@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  playerNames: { playerOne: "", playerTwo: "" },
+  playerNames: { playerOne: "Player one", playerTwo: "Player two" },
   soundSelection: "",
   syllableSelection: 1,
   gameSelection: "",

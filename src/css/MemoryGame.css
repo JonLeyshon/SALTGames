@@ -21,8 +21,8 @@ h3 {
 }
 
 .card img {
-  width: 165px;
-  height: 165px;
+  width: 150px;
+  height: 150px;
   border: white, 2px, solid;
   border-radius: 4px;
 }
@@ -49,7 +49,12 @@ h3 {
 }
 
 .cardNumber {
-  font-size: 20px;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: -20%;
+  right: 15%;
 }
 .newGameButton {
   display: inline-block;

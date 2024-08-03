@@ -1,0 +1,24 @@
+.container {
+  text-align: center;
+}
+
+.boxes {
+  display: flex;
+  height: 180px;
+  width: 180px;
+  background-color: rgb(124, 123, 123);
+  border: 4px solid blue;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.board {
+  height: 600px;
+  width: 564px;
+  display: flex;
+  margin: auto;
+}
+
+.boxes img {
+  margin: 50px;
+}

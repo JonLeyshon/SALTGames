@@ -1,14 +1,21 @@
-import React, { useState } from "react";
-import MemoryGame from "../memory-game/MemoryGame";
+import React, { useEffect, useState } from "react";
 import "../../css/Intro.css";
-import { useDispatch } from "react-redux";
-import { setPlayerNames } from "../../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSoundSelection, setPlayerNames } from "../../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
-const PlayerSelection = ({ speechSound }) => {
+const PlayerSelection = () => {
   const [playerOne, setPlayerOne] = useState("");
   const [playerTwo, setPlayerTwo] = useState("");
-  const [playersSet, setPlayersSet] = useState(false);
+  const speechSound = useSelector(selectSoundSelection);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!speechSound) {
+      navigate("/");
+    }
+  }, []);
 
   const handlePlayerOneChange = (e) => {
     setPlayerOne(e.target.value);
@@ -21,23 +28,13 @@ const PlayerSelection = ({ speechSound }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setPlayerNames({ playerOne, playerTwo }));
-    setPlayersSet(true);
+    navigate("/ticTacToe");
   };
-
-  if (playersSet) {
-    return (
-      <MemoryGame
-        playerOne={playerOne}
-        playerTwo={playerTwo}
-        speechSound={speechSound}
-      />
-    );
-  }
 
   return (
     <div className="player-selection">
       <h1>Player Names</h1>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="form-group">
           <label htmlFor="username1">Enter player one's name</label>
           <input
@@ -60,9 +57,11 @@ const PlayerSelection = ({ speechSound }) => {
             onChange={handlePlayerTwoChange}
           />
         </div>
-        <button type="submit" className="start-button">
-          Start Game
-        </button>
+        {playerOne && playerTwo && (
+          <button onClick={handleSubmit} className="nextButton">
+            Play
+          </button>
+        )}
       </form>
     </div>
   );

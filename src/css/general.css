@@ -3,3 +3,20 @@ body {
   margin: 0;
   text-align: center;
 }
+
+button {
+  background-color: white;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 10px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-right: 10px;
+}
+button:hover {
+  background-color: #0056b3;
+  color: white;
+  transform: scale(1.05);
+}
