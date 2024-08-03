@@ -23,7 +23,7 @@ h3 {
 .card img {
   width: 150px;
   height: 150px;
-  border: white, 2px, solid;
+  border: rgb(16, 16, 16), 4px, solid;
   border-radius: 4px;
 }
 

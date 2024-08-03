@@ -28,7 +28,7 @@ const PlayerSelection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setPlayerNames({ playerOne, playerTwo }));
-    navigate("/ticTacToe");
+    navigate("/gameSelection");
   };
 
   return (
@@ -59,7 +59,7 @@ const PlayerSelection = () => {
         </div>
         {playerOne && playerTwo && (
           <button onClick={handleSubmit} className="nextButton">
-            Play
+            Next
           </button>
         )}
       </form>

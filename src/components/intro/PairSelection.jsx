@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSoundSelection, setSyllableSelection } from "../../redux/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../css/Intro.css";
+import { handleCardRetrieval } from "../utils/usefulFunctions";
+import { setImages } from "../../redux/imagesSlice";
 
 const PairSelection = () => {
   const [speechSound, setSpeechSound] = useState("");
   const [syllables, setSyllables] = useState(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const sounds = ["b", "d", "f", "g", "k", "l", "p", "r", "s", "sh", "t"];
 
@@ -20,6 +23,12 @@ const PairSelection = () => {
   const handleSyllableSeletion = (selection) => {
     setSyllables(selection);
     dispatch(setSyllableSelection(selection));
+  };
+
+  const handleNextButton = async () => {
+    const data = await handleCardRetrieval(speechSound, syllables);
+    dispatch(setImages(data));
+    navigate("/players");
   };
 
   return (
@@ -80,9 +89,9 @@ const PairSelection = () => {
       </div>
 
       {speechSound && syllables !== null && (
-        <Link to="/players">
-          <button className="nextButton">Next</button>
-        </Link>
+        <button className="nextButton" onClick={() => handleNextButton()}>
+          Next
+        </button>
       )}
     </div>
   );

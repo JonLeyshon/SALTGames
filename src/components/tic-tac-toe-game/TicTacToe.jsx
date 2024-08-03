@@ -1,13 +1,39 @@
 import "../../css/ticTacToe.css";
 import circle_icon from "../../../public/img/circle.png";
 import cross_icon from "../../../public/img/cross.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectPlayerNames } from "../../redux/userSlice";
+import { selectImages } from "../../redux/imagesSlice";
+import { Tooltip } from "react-tooltip";
+import { useNavigate } from "react-router";
 
 const TicTacToe = () => {
-  let [data, setData] = useState(["", "", "", "", "", "", "", "", ""]);
-  let [count, setCount] = useState(0);
-  let [lock, setLock] = useState(false);
-  let [winner, setWinner] = useState(null);
+  const [data, setData] = useState(Array(9).fill(""));
+  const [count, setCount] = useState(0);
+  const [lock, setLock] = useState(false);
+  const [winner, setWinner] = useState(null);
+  const players = useSelector(selectPlayerNames);
+  const { playerOne, playerTwo } = players;
+  const [whosTurn, setWhosTurn] = useState(playerOne);
+  const images = useSelector(selectImages);
+  const [cards, setCards] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!images.length) {
+      navigate("/");
+    }
+
+    shuffleCards();
+  }, []);
+
+  const shuffleCards = () => {
+    const shuffledCards = [...images]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 9);
+    setCards(shuffledCards);
+  };
 
   const winningCombinations = [
     [0, 1, 2],
@@ -29,66 +55,95 @@ const TicTacToe = () => {
     return null;
   };
 
-  const toggle = (e, num) => {
-    if (lock || data[num]) {
-      return;
-    }
+  const toggle = (num) => {
+    if (lock || data[num]) return;
 
-    const newData = data.slice();
-    newData[num] = count % 2 === 0 ? "x" : "o";
+    const newData = [...data];
+    newData[num] = whosTurn;
     setData(newData);
-    e.target.innerHTML = `<img src = '${
-      newData[num] === "x" ? cross_icon : circle_icon
-    }'>`;
     setCount(count + 1);
 
     const gameWinner = checkWin(newData);
     if (gameWinner) {
       setLock(true);
-      setWinner(gameWinner);
-    } else if (newData.every((cell) => cell !== "")) {
+      setWinner(whosTurn);
+    } else if (newData.every((cell) => cell)) {
       setLock(true);
       setWinner("draw");
+    } else {
+      setWhosTurn(whosTurn === playerOne ? playerTwo : playerOne);
     }
   };
 
   const newGame = () => {
-    setData(["", "", "", "", "", "", "", "", ""]);
+    setData(Array(9).fill(""));
     setCount(0);
     setLock(false);
     setWinner(null);
-    const boxes = document.querySelectorAll(".boxes");
-    boxes.forEach((box) => (box.innerHTML = ""));
+    setWhosTurn(playerOne);
+    shuffleCards();
   };
+
+  const Box = ({ index }) => (
+    <div
+      className="boxes"
+      onClick={() => toggle(index)}
+      style={{ backgroundImage: `url(${cards[index]?.src})` }}
+      data-tooltip-id="my-tooltip"
+      data-tooltip-content={cards[index]?.word}
+    >
+      {data[index] && (
+        <img
+          src={data[index] === playerOne ? cross_icon : circle_icon}
+          alt={data[index]}
+        />
+      )}
+    </div>
+  );
+
+  // Determine which icon to display for the current player's turn
+  const currentIcon = whosTurn === playerOne ? cross_icon : circle_icon;
 
   return (
     <div className="container">
-      <h1 className="title">Tic Tac Toe</h1>
-      {winner && (
-        <div className="winner-message">
-          {winner === "draw" ? "It's a draw!" : `${winner.toUpperCase()} wins!`}
-        </div>
-      )}
-      <div className="board">
-        <div className="row1">
-          <div className="boxes" onClick={(e) => toggle(e, 0)}></div>
-          <div className="boxes" onClick={(e) => toggle(e, 1)}></div>
-          <div className="boxes" onClick={(e) => toggle(e, 2)}></div>
-        </div>
-        <div className="row2">
-          <div className="boxes" onClick={(e) => toggle(e, 3)}></div>
-          <div className="boxes" onClick={(e) => toggle(e, 4)}></div>
-          <div className="boxes" onClick={(e) => toggle(e, 5)}></div>
-        </div>
-        <div className="row3">
-          <div className="boxes" onClick={(e) => toggle(e, 6)}></div>
-          <div className="boxes" onClick={(e) => toggle(e, 7)}></div>
-          <div className="boxes" onClick={(e) => toggle(e, 8)}></div>
+      <div className="game">
+        <h1 className="title">Tic Tac Toe</h1>
+        {winner ? (
+          <h2 className="whosTurn">
+            {winner === "draw"
+              ? "It's a draw! Play again?"
+              : `${winner} wins! Play again?`}
+          </h2>
+        ) : (
+          <h2 className="whosTurn">
+            {`${whosTurn}'s turn `}
+            <img
+              src={currentIcon}
+              alt="Current turn icon"
+              style={{ width: "24px", height: "24px" }}
+            />
+          </h2>
+        )}
+        <div className="board">
+          {cards.length === 9 && (
+            <>
+              {[0, 1, 2].map((row) => (
+                <div className={`row${row + 1}`} key={row}>
+                  {[0, 1, 2].map((col) => (
+                    <Box index={row * 3 + col} key={col} />
+                  ))}
+                </div>
+              ))}
+            </>
+          )}
+          <Tooltip id="my-tooltip" place="top" type="dark" effect="float" />
         </div>
       </div>
-      <button className="newGameButton" onClick={newGame}>
-        New Game
-      </button>
+      <div className="turnCounter">
+        <button className="newGameButton" onClick={newGame}>
+          New Game
+        </button>
+      </div>
     </div>
   );
 };

@@ -15,8 +15,7 @@ const MemoryGame = () => {
   const speechSound = useSelector(selectSoundSelection);
   const syllables = useSelector(selectSyllableSelection);
   const players = useSelector(selectPlayerNames);
-  const playerOne = players.playerOne;
-  const playerTwo = players.playerTwo;
+  const { playerOne, playerTwo } = players;
   const [cardImages, setCardImages] = useState([]);
   const [shuffledCards, setShuffledCards] = useState([]);
   const [turnOne, setTurnOne] = useState(null);
@@ -29,8 +28,6 @@ const MemoryGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [wordAmount, setWordAmount] = useState(9);
   const navigate = useNavigate();
-
-  console.log(players);
 
   const handleCardRetrieval = async (speech_sound, syllables) => {
     try {
@@ -63,9 +60,9 @@ const MemoryGame = () => {
   };
 
   const shuffleCards = (cards) => {
-    const randomizedCards = cards.sort(() => Math.random() - 0.5);
+    const randomisedCards = cards.sort(() => Math.random() - 0.5);
 
-    const selectedCards = randomizedCards.slice(0, wordAmount);
+    const selectedCards = randomisedCards.slice(0, wordAmount);
 
     const duplicatedCards = [...selectedCards, ...selectedCards].sort(
       () => Math.random() - 0.5
@@ -165,13 +162,22 @@ const MemoryGame = () => {
       <h3>{`${playerOne}'s score: ${playerOneScore}`}</h3>
       <h3>{`${playerTwo}'s score: ${playerTwoScore}`}</h3>
       <button
+        onClick={() => setWordAmount(3)}
+        style={{
+          color: wordAmount === 3 ? "white" : "",
+          backgroundColor: wordAmount === 3 ? "#007bff" : "",
+        }}
+      >
+        3 pairs
+      </button>
+      <button
         onClick={() => setWordAmount(6)}
         style={{
           color: wordAmount === 6 ? "white" : "",
           backgroundColor: wordAmount === 6 ? "#007bff" : "",
         }}
       >
-        6 Words
+        6 pairs
       </button>
       <button
         onClick={() => setWordAmount(9)}
@@ -180,7 +186,7 @@ const MemoryGame = () => {
           backgroundColor: wordAmount === 9 ? "#007bff" : "",
         }}
       >
-        9 words
+        9 pairs
       </button>
 
       <div className="card-grid">
