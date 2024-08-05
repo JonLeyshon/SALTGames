@@ -14,7 +14,7 @@ const SingleCard = ({
   };
 
   return (
-    <div className={`card ${flipped ? "flipped" : ""}`}>
+    <div className={`cardMemory ${flipped ? "flipped" : ""}`}>
       <div className="inner">
         <img
           className="front"

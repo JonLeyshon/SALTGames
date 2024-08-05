@@ -4,7 +4,7 @@
 
 h2,
 h3 {
-  margin: 0;
+  margin: 10px auto;
 }
 
 .card-grid {
@@ -13,21 +13,29 @@ h3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
+  justify-items: center;
 }
 
-.card {
+.card-grid.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.card-grid.six {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.cardMemory {
   border-radius: 5px;
   position: relative;
 }
 
-.card img {
-  width: 150px;
-  height: 150px;
-  border: rgb(16, 16, 16), 4px, solid;
+.cardMemory img {
+  width: 135px;
+  height: 135px;
+  border: 4px solid #007bff;
   border-radius: 4px;
 }
 
-.card .front {
+.cardMemory .front {
   transform: rotateY(90deg);
   transition: all ease-in 0.2s;
   position: absolute;
@@ -38,7 +46,7 @@ h3 {
   transition-delay: 0.2s;
 }
 
-.card .back {
+.cardMemory .back {
   transition: all ease-in 0.2s;
   transition-delay: 0.2s;
 }
@@ -55,6 +63,9 @@ h3 {
   position: absolute;
   top: -20%;
   right: 15%;
+}
+.wordOptions {
+  margin-bottom: 10px;
 }
 .newGameButton {
   display: inline-block;
@@ -82,6 +93,14 @@ h3 {
 
 @media (max-width: 768px) {
   .card-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+  }
+  .card-grid.six {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .cardMemory img {
+    width: 115px;
+    height: 115px;
   }
 }

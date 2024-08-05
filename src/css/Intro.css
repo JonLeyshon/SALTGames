@@ -81,6 +81,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  margin: 2vw auto;
 }
 
 .speechSoundSelection button {
@@ -150,10 +151,8 @@
 
 .gamesContainer {
   text-align: center;
-  background-color: #dfdcdc;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 90vw;
   margin: 40px auto;
 }
@@ -175,6 +174,7 @@
   background-color: #007bff;
   color: white;
   border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 1061px) {

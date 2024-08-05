@@ -1,0 +1,14 @@
+footer {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+}
+
+footer p {
+  margin: 10px;
+}
+
+.footerDetails {
+  display: flex;
+  justify-content: space-between;
+}

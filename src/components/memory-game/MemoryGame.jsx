@@ -161,35 +161,46 @@ const MemoryGame = () => {
       </h2>
       <h3>{`${playerOne}'s score: ${playerOneScore}`}</h3>
       <h3>{`${playerTwo}'s score: ${playerTwoScore}`}</h3>
+      <div className="wordOptions">
+        <button
+          onClick={() => setWordAmount(3)}
+          style={{
+            color: wordAmount === 3 ? "white" : "",
+            backgroundColor: wordAmount === 3 ? "#007bff" : "",
+          }}
+        >
+          3 pairs
+        </button>
+        <button
+          onClick={() => setWordAmount(6)}
+          style={{
+            color: wordAmount === 6 ? "white" : "",
+            backgroundColor: wordAmount === 6 ? "#007bff" : "",
+          }}
+        >
+          6 pairs
+        </button>
+        <button
+          onClick={() => setWordAmount(9)}
+          style={{
+            color: wordAmount === 9 ? "white" : "",
+            backgroundColor: wordAmount === 9 ? "#007bff" : "",
+          }}
+        >
+          9 pairs
+        </button>
+      </div>
       <button
-        onClick={() => setWordAmount(3)}
-        style={{
-          color: wordAmount === 3 ? "white" : "",
-          backgroundColor: wordAmount === 3 ? "#007bff" : "",
-        }}
+        className="newGameButton"
+        onClick={() => shuffleCards(cardImages)}
       >
-        3 pairs
+        New Game
       </button>
-      <button
-        onClick={() => setWordAmount(6)}
-        style={{
-          color: wordAmount === 6 ? "white" : "",
-          backgroundColor: wordAmount === 6 ? "#007bff" : "",
-        }}
+      <div
+        className={`card-grid ${
+          wordAmount === 6 ? "six" : wordAmount === 3 ? "three" : ""
+        }`}
       >
-        6 pairs
-      </button>
-      <button
-        onClick={() => setWordAmount(9)}
-        style={{
-          color: wordAmount === 9 ? "white" : "",
-          backgroundColor: wordAmount === 9 ? "#007bff" : "",
-        }}
-      >
-        9 pairs
-      </button>
-
-      <div className="card-grid">
         {shuffledCards.map((card) => (
           <SingleCard
             key={card.id}
@@ -201,12 +212,6 @@ const MemoryGame = () => {
           />
         ))}
       </div>
-      <button
-        className="newGameButton"
-        onClick={() => shuffleCards(cardImages)}
-      >
-        New Game
-      </button>
     </div>
   );
 };

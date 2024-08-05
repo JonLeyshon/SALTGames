@@ -33,7 +33,7 @@ const PairSelection = () => {
 
   return (
     <div className="pairSelectionContainer">
-      <h1>Welcome to your Minimal Pairs Speech Games</h1>
+      <h1>Welcome to your Speech Games</h1>
       <h2>Please select the sound you would like to work on</h2>
 
       <div className="speechSoundSelection">
