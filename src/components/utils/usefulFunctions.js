@@ -1,4 +1,5 @@
 import axios from "axios";
+import { url } from "../../config";
 
 export const handleCardRetrieval = async (speech_sound, syllables) => {
   try {
@@ -6,11 +7,11 @@ export const handleCardRetrieval = async (speech_sound, syllables) => {
 
     if (syllables) {
       results = await axios.get(
-        `http://localhost:6002/get?speech_sound=${speech_sound}&syllables=${syllables}`
+        `${url}/getImages?speech_sound=${speech_sound}&syllables=${syllables}`
       );
     } else {
       results = await axios.get(
-        `http://localhost:6002/get?speech_sound=${speech_sound}`
+        `${url}/getImages?speech_sound=${speech_sound}`
       );
     }
 

@@ -7,6 +7,7 @@ import {
 import { selectImages } from "../../redux/imagesSlice";
 import CheekyMonkeySingleCard from "./CheekyMonkeySingleCard";
 import { useNavigate } from "react-router";
+import InstructionsModal from "./InstructionsCheekyMonkey";
 
 const cardFronts = [
   { src: "../../../public/img/banana.png", value: 1 },
@@ -30,18 +31,16 @@ const CheekyMonkey = () => {
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [winnerMessage, setWinnerMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const syllables = useSelector(selectSyllableSelection);
   const navigate = useNavigate();
-
-  console.log(winnerMessage);
-  console.log("count " + count);
-  console.log(finished);
-  console.log("length" + shuffledCards.length);
 
   useEffect(() => {
     const cards = syllables ? cardFronts : [...cardFronts, ...cardFronts];
     shuffleAndAttachCards(cards);
-  }, [images, syllables]);
+    handleNewGame();
+  }, [images]);
 
   useEffect(() => {
     checkForWin();
@@ -55,13 +54,22 @@ const CheekyMonkey = () => {
   };
 
   const shuffleAndAttachCards = (cards) => {
+    if (!cards.length || !images.length) return;
+
     const shuffledFronts = shuffleArray([...cards]);
     const shuffledBacks = shuffleArray([...images]);
-    const pairedCards = shuffledBacks.map((image, index) => ({
-      ...image,
-      front: shuffledFronts[index],
-      id: Math.random(),
-    }));
+
+    const validImageCount = Math.min(
+      shuffledBacks.length,
+      shuffledFronts.length
+    );
+    const pairedCards = shuffledBacks
+      .slice(0, validImageCount)
+      .map((image, index) => ({
+        ...image,
+        front: shuffledFronts[index],
+        id: Math.random(),
+      }));
     setShuffledCards(pairedCards);
   };
 
@@ -108,9 +116,25 @@ const CheekyMonkey = () => {
     setWinnerMessage("");
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <div className="container">
+      <p
+        className="backButton"
+        onClick={() => {
+          navigate("/gameSelection");
+        }}
+      >
+        Back to Games
+      </p>
+      <div className="cm-container">
         <div className="gameContainer">
           <h1>Cheeky Monkey Game</h1>
           <div
@@ -151,9 +175,12 @@ const CheekyMonkey = () => {
               <p className="keyInfo"> Monkeys eat your points! </p>
             </div>
             <button className="newGameButton" onClick={handleNewGame}>
-              {" "}
               New Game
             </button>
+            <button className="instructions" onClick={openModal}>
+              Instructions?
+            </button>
+            <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         </div>
       </div>

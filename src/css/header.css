@@ -4,27 +4,89 @@ header {
   background-color: #007bff;
   color: white;
   align-items: center;
-  padding: 10px;
-  font-weight: bold;
+  padding: 10px 20px;
+  position: relative;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-}
-li {
-  margin-right: 5vw;
-  font-size: 1.2rem;
+header img {
+  width: 200px;
 }
 
-p {
-  font-size: 1.4rem;
+header p {
+  font-size: 1rem;
 }
 
-a {
-  text-decoration: none;
-  color: white;
+header p:hover {
+  color: black;
 }
+
 a:hover {
   color: lightgray;
+}
+
+.menu {
+  position: relative;
+}
+
+.dropdown {
+  background-color: #e9efff;
+  color: black;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  right: -100vw;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s ease;
+  z-index: 1000;
+}
+
+.dropdown.show {
+  right: 0;
+}
+
+.closeButton {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+  color: #007bff;
+}
+
+.soundsContainer,
+.syllablesContainer {
+  padding: 20px;
+}
+
+.sounds,
+.syllables {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sounds button,
+.syllables button {
+  margin: 10px;
+}
+
+.sounds button:hover {
+  background-color: #0056b3;
+}
+
+.headerText {
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .dropdown {
+    width: 100vw;
+    right: -100vw;
+  }
+  .dropdown.show {
+    right: 0;
+  }
 }

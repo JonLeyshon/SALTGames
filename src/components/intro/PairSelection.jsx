@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSoundSelection, setSyllableSelection } from "../../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectSoundSelection,
+  selectSyllableSelection,
+  setSoundSelection,
+  setSyllableSelection,
+} from "../../redux/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import "../../css/Intro.css";
 import { handleCardRetrieval } from "../utils/usefulFunctions";
 import { setImages } from "../../redux/imagesSlice";
+import { sounds } from "../utils/constants";
 
 const PairSelection = () => {
   const [speechSound, setSpeechSound] = useState("");
@@ -12,8 +18,8 @@ const PairSelection = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const sounds = ["b", "d", "f", "g", "k", "l", "p", "r", "s", "sh", "t"];
+  const selectedSound = useSelector(selectSoundSelection);
+  const selectedSyllable = useSelector(selectSyllableSelection);
 
   const handleSoundSelection = (sound) => {
     setSpeechSound(sound);
@@ -26,7 +32,7 @@ const PairSelection = () => {
   };
 
   const handleNextButton = async () => {
-    const data = await handleCardRetrieval(speechSound, syllables);
+    const data = await handleCardRetrieval(selectedSound, selectedSyllable);
     dispatch(setImages(data));
     navigate("/players");
   };
@@ -42,8 +48,8 @@ const PairSelection = () => {
             key={sound}
             onClick={() => handleSoundSelection(sound)}
             style={{
-              color: speechSound === sound ? "white" : "",
-              backgroundColor: speechSound === sound ? "#007bff" : "",
+              color: selectedSound === sound ? "white" : "",
+              backgroundColor: selectedSound === sound ? "#007bff" : "",
             }}
           >
             {sound}
@@ -58,8 +64,8 @@ const PairSelection = () => {
             handleSyllableSeletion(1);
           }}
           style={{
-            color: syllables === 1 ? "white" : "",
-            backgroundColor: syllables === 1 ? "#007bff" : "",
+            color: selectedSyllable === 1 ? "white" : "",
+            backgroundColor: selectedSyllable === 1 ? "#007bff" : "",
           }}
         >
           CVC
@@ -69,8 +75,8 @@ const PairSelection = () => {
             handleSyllableSeletion(2);
           }}
           style={{
-            color: syllables === 2 ? "white" : "",
-            backgroundColor: syllables === 2 ? "#007bff" : "",
+            color: selectedSyllable === 2 ? "white" : "",
+            backgroundColor: selectedSyllable === 2 ? "#007bff" : "",
           }}
         >
           2 syllables
@@ -80,15 +86,15 @@ const PairSelection = () => {
             handleSyllableSeletion("");
           }}
           style={{
-            color: syllables === "" ? "white" : "",
-            backgroundColor: syllables === "" ? "#007bff" : "",
+            color: selectedSyllable === "" ? "white" : "",
+            backgroundColor: selectedSyllable === "" ? "#007bff" : "",
           }}
         >
           Both
         </button>
       </div>
 
-      {speechSound && syllables !== null && (
+      {selectedSound && selectedSyllable !== null && (
         <button className="nextButton" onClick={() => handleNextButton()}>
           Next
         </button>

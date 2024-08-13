@@ -15,8 +15,8 @@
 }
 
 .board {
-  height: 540px;
-  width: 507px;
+  height: 545px;
+  width: 510px;
   display: flex;
   margin: auto;
 }
@@ -28,6 +28,33 @@
 h1.title {
   margin: 0;
   padding: 5px 0;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content button {
+  margin-top: 10px;
 }
 
 @media (max-width: 550px) {

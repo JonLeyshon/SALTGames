@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../css/MemoryGame.css";
 import SingleCard from "./SingleCard";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import {
   selectPlayerNames,
@@ -10,6 +9,8 @@ import {
   setCardAmount,
 } from "../../redux/userSlice";
 import { useNavigate } from "react-router";
+import { handleCardRetrieval } from "../utils/usefulFunctions";
+import InstructionsModal from "./InstructionsMemoryGame";
 
 const MemoryGame = () => {
   const speechSound = useSelector(selectSoundSelection);
@@ -27,52 +28,29 @@ const MemoryGame = () => {
   const [winnerScript, setWinnerScript] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
   const [wordAmount, setWordAmount] = useState(9);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleCardRetrieval = async (speech_sound, syllables) => {
+  const getCards = async () => {
     try {
-      let results;
-
-      if (syllables) {
-        results = await axios.get(
-          `http://localhost:6002/get?speech_sound=${speech_sound}&syllables=${syllables}`
-        );
-      } else {
-        results = await axios.get(
-          `http://localhost:6002/get?speech_sound=${speech_sound}`
-        );
-      }
-
-      if (results.data.length) {
-        const newCardImages = results.data.map((result) => ({
-          src: result.image_path,
-          matched: false,
-          word: result.word,
-        }));
-        setCardImages(newCardImages);
-        shuffleCards(newCardImages);
-      } else {
-        console.error("Retrieval failed");
-      }
+      const data = await handleCardRetrieval(speechSound, syllables);
+      setCardImages(data);
+      setTimeout(() => shuffleCards(data), 0);
     } catch (error) {
-      console.error("Retrieval failed:", error);
+      console.error("Error retrieving cards:", error);
     }
   };
 
   const shuffleCards = (cards) => {
     const randomisedCards = cards.sort(() => Math.random() - 0.5);
-
     const selectedCards = randomisedCards.slice(0, wordAmount);
-
     const duplicatedCards = [...selectedCards, ...selectedCards].sort(
       () => Math.random() - 0.5
     );
-
     const shuffledCards = duplicatedCards.map((card, index) => ({
       ...card,
       id: index + 1,
     }));
-
     setShuffledCards(shuffledCards);
     setTurnOne(null);
     setTurnTwo(null);
@@ -119,9 +97,10 @@ const MemoryGame = () => {
   useEffect(() => {
     if (!speechSound) {
       navigate("/");
+    } else {
+      getCards();
     }
-    handleCardRetrieval(speechSound, syllables);
-  }, [wordAmount]);
+  }, [speechSound, syllables, wordAmount]);
 
   useEffect(() => {
     if (turnOne && turnTwo) {
@@ -154,65 +133,89 @@ const MemoryGame = () => {
 
   const turnColor = whosTurn === playerOne ? "green" : "blue";
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="memory-game">
-      <h2 style={{ color: winnerScript ? "Black" : turnColor }}>
-        {winnerScript || `${whosTurn}'s Turn`}
-      </h2>
-      <h3>{`${playerOne}'s score: ${playerOneScore}`}</h3>
-      <h3>{`${playerTwo}'s score: ${playerTwoScore}`}</h3>
-      <div className="wordOptions">
-        <button
-          onClick={() => setWordAmount(3)}
-          style={{
-            color: wordAmount === 3 ? "white" : "",
-            backgroundColor: wordAmount === 3 ? "#007bff" : "",
-          }}
-        >
-          3 pairs
-        </button>
-        <button
-          onClick={() => setWordAmount(6)}
-          style={{
-            color: wordAmount === 6 ? "white" : "",
-            backgroundColor: wordAmount === 6 ? "#007bff" : "",
-          }}
-        >
-          6 pairs
-        </button>
-        <button
-          onClick={() => setWordAmount(9)}
-          style={{
-            color: wordAmount === 9 ? "white" : "",
-            backgroundColor: wordAmount === 9 ? "#007bff" : "",
-          }}
-        >
-          9 pairs
-        </button>
-      </div>
-      <button
-        className="newGameButton"
-        onClick={() => shuffleCards(cardImages)}
+    <>
+      <p
+        className="backButton"
+        onClick={() => {
+          navigate("/gameSelection");
+        }}
       >
-        New Game
-      </button>
-      <div
-        className={`card-grid ${
-          wordAmount === 6 ? "six" : wordAmount === 3 ? "three" : ""
-        }`}
-      >
-        {shuffledCards.map((card) => (
-          <SingleCard
-            key={card.id}
-            card={card}
-            handleCardChoice={handleCardChoice}
-            flipped={card === turnOne || card === turnTwo || card.matched}
-            disabled={disabled}
-            whosTurn={whosTurn}
-          />
-        ))}
+        Back to Games
+      </p>
+      <div className="memory-game">
+        <h2 style={{ color: winnerScript ? "Black" : turnColor }}>
+          {winnerScript || `${whosTurn}'s Turn`}
+        </h2>
+        <h3>{`${playerOne}'s score: ${playerOneScore}`}</h3>
+        <h3>{`${playerTwo}'s score: ${playerTwoScore}`}</h3>
+        <div className="wordOptions">
+          <button
+            onClick={() => setWordAmount(3)}
+            style={{
+              color: wordAmount === 3 ? "white" : "",
+              backgroundColor: wordAmount === 3 ? "#007bff" : "",
+            }}
+          >
+            3 pairs
+          </button>
+          <button
+            onClick={() => setWordAmount(6)}
+            style={{
+              color: wordAmount === 6 ? "white" : "",
+              backgroundColor: wordAmount === 6 ? "#007bff" : "",
+            }}
+          >
+            6 pairs
+          </button>
+          <button
+            onClick={() => setWordAmount(9)}
+            style={{
+              color: wordAmount === 9 ? "white" : "",
+              backgroundColor: wordAmount === 9 ? "#007bff" : "",
+            }}
+          >
+            9 pairs
+          </button>
+        </div>
+        <div className="newGameButtonContainer">
+          <button
+            className="newGameButton"
+            onClick={() => shuffleCards(cardImages)}
+          >
+            New Game
+          </button>
+          <button className="instructions" onClick={openModal}>
+            Instructions?
+          </button>
+          <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
+        </div>
+        <div
+          className={`card-grid ${
+            wordAmount === 6 ? "six" : wordAmount === 3 ? "three" : ""
+          }`}
+        >
+          {shuffledCards.map((card) => (
+            <SingleCard
+              key={card.id}
+              card={card}
+              handleCardChoice={handleCardChoice}
+              flipped={card === turnOne || card === turnTwo || card.matched}
+              disabled={disabled}
+              whosTurn={whosTurn}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

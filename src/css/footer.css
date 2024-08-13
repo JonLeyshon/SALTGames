@@ -2,6 +2,7 @@ footer {
   background-color: #007bff;
   color: white;
   padding: 10px;
+  margin-top: 100px;
 }
 
 footer p {
@@ -11,4 +12,19 @@ footer p {
 .footerDetails {
   display: flex;
   justify-content: space-between;
+}
+
+.attributionLinks {
+  display: flex;
+  flex-direction: column;
+}
+
+.attributionLinks a {
+  font-size: 8px;
+  text-decoration: none;
+  color: white;
+}
+
+footer button {
+  margin-bottom: 20px;
 }

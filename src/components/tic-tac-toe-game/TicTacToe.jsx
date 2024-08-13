@@ -3,10 +3,11 @@ import circle_icon from "../../../public/img/circle.png";
 import cross_icon from "../../../public/img/cross.png";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectPlayerNames } from "../../redux/userSlice";
+import { selectPlayerNames, selectSoundSelection } from "../../redux/userSlice";
 import { selectImages } from "../../redux/imagesSlice";
 import { Tooltip } from "react-tooltip";
 import { useNavigate } from "react-router";
+import InstructionsModal from "./InstructionsTicTacToe";
 
 const TicTacToe = () => {
   const [data, setData] = useState(Array(9).fill(""));
@@ -19,14 +20,21 @@ const TicTacToe = () => {
   const images = useSelector(selectImages);
   const [cards, setCards] = useState([]);
   const navigate = useNavigate();
+  const selectedSound = useSelector(selectSoundSelection);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!images.length) {
+    if (!images || !images.length) {
       navigate("/");
     }
 
     shuffleCards();
   }, []);
+
+  useEffect(() => {
+    shuffleCards();
+    newGame();
+  }, [images]);
 
   const shuffleCards = () => {
     const shuffledCards = [...images]
@@ -101,11 +109,26 @@ const TicTacToe = () => {
     </div>
   );
 
-  // Determine which icon to display for the current player's turn
   const currentIcon = whosTurn === playerOne ? cross_icon : circle_icon;
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="container">
+      <p
+        className="backButton"
+        onClick={() => {
+          navigate("/gameSelection");
+        }}
+      >
+        Back to Games
+      </p>
       <div className="game">
         <h1 className="title">Tic Tac Toe</h1>
         {winner ? (
@@ -124,6 +147,13 @@ const TicTacToe = () => {
             />
           </h2>
         )}
+        <button className="newGameButton" onClick={newGame}>
+          New Game
+        </button>
+        <button className="instructions" onClick={openModal}>
+          Instructions?
+        </button>
+        <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
         <div className="board">
           {cards.length === 9 && (
             <>
@@ -139,11 +169,7 @@ const TicTacToe = () => {
           <Tooltip id="my-tooltip" place="top" type="dark" effect="float" />
         </div>
       </div>
-      <div className="turnCounter">
-        <button className="newGameButton" onClick={newGame}>
-          New Game
-        </button>
-      </div>
+      <div className="turnCounter"></div>
     </div>
   );
 };

@@ -32,38 +32,48 @@ const PlayerSelection = () => {
   };
 
   return (
-    <div className="player-selection">
-      <h1>Player Names</h1>
-      <form>
-        <div className="form-group">
-          <label htmlFor="username1">Enter player one's name</label>
-          <input
-            id="username1"
-            name="username1"
-            type="text"
-            required
-            value={playerOne}
-            onChange={handlePlayerOneChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="username2">Enter player two's name</label>
-          <input
-            id="username2"
-            name="username2"
-            type="text"
-            required
-            value={playerTwo}
-            onChange={handlePlayerTwoChange}
-          />
-        </div>
-        {playerOne && playerTwo && (
-          <button onClick={handleSubmit} className="nextButton">
-            Next
-          </button>
-        )}
-      </form>
-    </div>
+    <>
+      <p
+        className="backButton"
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        Back to Sounds
+      </p>
+      <div className="player-selection">
+        <h1>Player Names</h1>
+        <form>
+          <div className="form-group">
+            <label htmlFor="username1">Enter player one's name</label>
+            <input
+              id="username1"
+              name="username1"
+              type="text"
+              required
+              value={playerOne}
+              onChange={handlePlayerOneChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username2">Enter player two's name</label>
+            <input
+              id="username2"
+              name="username2"
+              type="text"
+              required
+              value={playerTwo}
+              onChange={handlePlayerTwoChange}
+            />
+          </div>
+          {playerOne && playerTwo && (
+            <button onClick={handleSubmit} className="nextButton">
+              Next
+            </button>
+          )}
+        </form>
+      </div>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   playerNames: { playerOne: "Player one", playerTwo: "Player two" },
   soundSelection: "",
-  syllableSelection: 1,
+  syllableSelection: null,
   gameSelection: "",
 };
 

@@ -1,0 +1,15 @@
+export const sounds = [
+  "b",
+  "d",
+  "f",
+  "g",
+  "k",
+  "l",
+  "p",
+  "r",
+  "s",
+  "sh",
+  "t",
+  "s blends",
+  "r blends",
+];

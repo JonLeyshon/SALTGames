@@ -2,8 +2,15 @@ body {
   font-family: "Courier New", Courier, monospace;
   margin: 0;
   text-align: center;
+  min-height: 100vh;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
 button {
   background-color: white;
   border: 1px solid #007bff;
@@ -14,6 +21,7 @@ button {
   font-size: 16px;
   transition: background-color 0.3s, transform 0.3s;
   margin-right: 10px;
+  cursor: pointer;
 }
 button:hover {
   background-color: #0056b3;

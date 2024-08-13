@@ -115,7 +115,7 @@
 
 /* next button */
 .nextButton {
-  margin-top: 20px;
+  margin: 20px auto;
   padding: 10px 20px;
   font-size: 18px;
   background-color: #007bff;
@@ -149,6 +149,15 @@
 
 /* Game selection */
 
+.backButton {
+  text-align: left;
+  padding: 10px;
+}
+.backButton:hover {
+  color: #007bff;
+  cursor: pointer;
+}
+
 .gamesContainer {
   text-align: center;
   padding: 20px;
@@ -157,14 +166,14 @@
   margin: 40px auto;
 }
 .games {
-  padding: 100px;
+  padding: 75px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
 .games img {
-  width: 300px;
+  width: 200px;
 }
 .gameSelection {
   padding: 20px;
