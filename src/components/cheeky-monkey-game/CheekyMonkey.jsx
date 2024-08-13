@@ -10,15 +10,15 @@ import { useNavigate } from "react-router";
 import InstructionsModal from "./InstructionsCheekyMonkey";
 
 const cardFronts = [
-  { src: "../../../public/img/banana.png", value: 1 },
-  { src: "../../../public/img/banana.png", value: 1 },
-  { src: "../../../public/img/banana.png", value: 1 },
-  { src: "../../../public/img/banana.png", value: 1 },
-  { src: "../../../public/img/water-melon.png", value: 3 },
-  { src: "../../../public/img/water-melon.png", value: 3 },
-  { src: "../../../public/img/water-melon.png", value: 3 },
-  { src: "../../../public/img/water-melon.png", value: 3 },
-  { src: "../../../public/img/monkey.png", value: 0 },
+  { src: "/img/banana.png", value: 1 },
+  { src: "/img/banana.png", value: 1 },
+  { src: "/img/banana.png", value: 1 },
+  { src: "/img/banana.png", value: 1 },
+  { src: "/img/water-melon.png", value: 3 },
+  { src: "/img/water-melon.png", value: 3 },
+  { src: "/img/water-melon.png", value: 3 },
+  { src: "/img/water-melon.png", value: 3 },
+  { src: "/img/monkey.png", value: 0 },
 ];
 
 const CheekyMonkey = () => {
@@ -163,15 +163,15 @@ const CheekyMonkey = () => {
           <h3> {`${playerTwo}'s score: ${playerTwoScore}`}</h3>
           <div className="key">
             <div className="key1">
-              <img src="../../../public/img/banana.png" alt="bananas" />
+              <img src="/img/banana.png" alt="bananas" />
               <p className="keyInfo"> 1 Points</p>
             </div>
             <div className="key2">
-              <img src="../../../public/img/water-melon.png" alt="melons" />
+              <img src="/img/water-melon.png" alt="melons" />
               <p className="keyInfo"> 3 Points</p>
             </div>
             <div className="key1">
-              <img src="../../../public/img/monkey.png" alt="monkey" />
+              <img src="/img/monkey.png" alt="monkey" />
               <p className="keyInfo"> Monkeys eat your points! </p>
             </div>
             <button className="newGameButton" onClick={handleNewGame}>

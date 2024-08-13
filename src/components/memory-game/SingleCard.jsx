@@ -26,7 +26,7 @@ const SingleCard = ({
 
         <img
           className="back"
-          src="./public/img/cover.jpg"
+          src="/img/cover.jpg"
           onClick={handleClick}
           alt="card back"
         />

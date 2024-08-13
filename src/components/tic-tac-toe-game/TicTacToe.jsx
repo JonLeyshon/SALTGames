@@ -1,6 +1,6 @@
 import "../../css/ticTacToe.css";
-import circle_icon from "../../../public/img/circle.png";
-import cross_icon from "../../../public/img/cross.png";
+import circle_icon from "/img/circle.png";
+import cross_icon from "/img/cross.png";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectPlayerNames, selectSoundSelection } from "../../redux/userSlice";

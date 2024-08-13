@@ -33,7 +33,7 @@ const GameSelection = () => {
             }}
           >
             <h3>Tic Tac Toe</h3>
-            <img src="../../../public/img/tic-tac-toe.png" />
+            <img src="/img/tic-tac-toe.png" />
           </div>
           <div
             className="gameSelection"
@@ -42,7 +42,7 @@ const GameSelection = () => {
             }}
           >
             <h3>Memory Game</h3>
-            <img src="../../../public/img/memory.png" />
+            <img src="/img/memory.png" />
           </div>
           <div
             className="gameSelection"
@@ -51,7 +51,7 @@ const GameSelection = () => {
             }}
           >
             <h3>Cheeky Monkey Game</h3>
-            <img src="../../../public/img/monkey.png" />
+            <img src="//img/monkey.png" />
           </div>
         </div>
       </div>

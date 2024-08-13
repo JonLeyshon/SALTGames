@@ -55,7 +55,7 @@ const Header = () => {
     <>
       <Link to="/">
         {/* <p>SALT Games</p> */}
-        <img src="../../../../public/img/logo.png" alt="SALT Games" />
+        <img src="/img/logo.png" alt="SALT Games" />
       </Link>
       <div className="menu">
         <p onClick={toggleSoundsMenu} className="headerText">
