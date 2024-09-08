@@ -4,8 +4,8 @@
 
 .boxes {
   display: flex;
-  height: 165px;
-  width: 165px;
+  height: 140px;
+  width: 140px;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,8 +15,8 @@
 }
 
 .board {
-  height: 545px;
-  width: 510px;
+  height: 420px;
+  width: 420px;
   display: flex;
   margin: auto;
 }

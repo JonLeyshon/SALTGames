@@ -9,7 +9,7 @@ h3 {
 
 .card-grid {
   margin: 1rem auto;
-  max-width: 1280px;
+  max-width: 1000px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
@@ -130,7 +130,7 @@ h3 {
     grid-template-columns: 1fr 1fr 1fr;
   }
   .cardMemory img {
-    width: 115px;
-    height: 115px;
+    width: 100px;
+    height: 100px;
   }
 }

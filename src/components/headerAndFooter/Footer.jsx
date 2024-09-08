@@ -10,15 +10,25 @@ const Footer = () => {
       <p>&copy; Copyright 2024</p>
 
       <div className="contactButtons">
-        <button>
-          <FontAwesomeIcon icon={faGlobe} />
-        </button>
-        <button>
-          <FontAwesomeIcon icon={faGithub} />
-        </button>
-        <button>
-          <FontAwesomeIcon icon={faLinkedin} />
-        </button>
+        <a href="https://www.jonleyshoncodes.co.uk" target="_blank">
+          <button>
+            <FontAwesomeIcon icon={faGlobe} />
+          </button>
+        </a>
+
+        <a href="https://github.com/JonLeyshon" target="_blank">
+          <button>
+            <FontAwesomeIcon icon={faGithub} />
+          </button>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/jon-leyshon-338534a9/"
+          target="_blank"
+        >
+          <button>
+            <FontAwesomeIcon icon={faLinkedin} />
+          </button>
+        </a>
       </div>
       <div className="attributionLinks">
         <a

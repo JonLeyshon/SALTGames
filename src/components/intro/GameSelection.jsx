@@ -51,7 +51,7 @@ const GameSelection = () => {
             }}
           >
             <h3>Cheeky Monkey Game</h3>
-            <img src="//img/monkey.png" />
+            <img src="/img/monkey.png" />
           </div>
         </div>
       </div>
