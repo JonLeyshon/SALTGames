@@ -14,3 +14,5 @@ Game Logic: Vanilla JavaScript to power game mechanics and interactivity.
 
 
 SALT Games aims to revolutionize the way speech therapy is conducted by integrating technology into therapeutic practices, making sessions more interactive and enjoyable for users.
+
+Backend code: https://github.com/JonLeyshon/SALTGamesBackend
